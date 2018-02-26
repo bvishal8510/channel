@@ -41,14 +41,23 @@ INSTALLED_APPS = [
     'channels',
 ]
 
+ASGI_APPLICATION = "message.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'message.routing.channel_routing',
+    }
+}
+
 # CHANNEL_LAYERS = {
 #     'default': {
-#         'BACKEND': 'asgi_redis.RedisChannelLayer',
-#         'CONFIG': {
-#             'hosts': [('localhost', 6379)],
-#         },
-#         'ROUTING': 'talk_channels.routing.channel_routing',
-#     }
+#         'BACKEND': 'asgiref.inmemory.ChannelLayer',
+#         'ROUTING': 'django_channels.routing.channel_routing',
+#     },
 # }
 
 MIDDLEWARE = [

@@ -21,9 +21,11 @@ Including another URLconf
 # ]
 from django.conf.urls import include, url
 from django.contrib import admin
+from talk import views
+from django.contrib.auth.models import User
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^', include('talk.urls', namespace='example')),
-    url(r'^', include(('talk.urls','example',))),
+    url(r'^', include(('talk.urls'))),
 ]

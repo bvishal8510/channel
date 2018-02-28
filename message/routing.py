@@ -1,8 +1,8 @@
-from channels.routing import route
-from talk.consumers import ws_connect, ws_disconnect
-
+from channels import include
 
 channel_routing = [
-    route('websocket.connect', ws_connect),
-    route('websocket.disconnect', ws_disconnect),
+
+    include("talk.routing.websocket_routing", path=r"^/chat/stream"),
+
+    include("talk.routing.custom_routing"),
 ]

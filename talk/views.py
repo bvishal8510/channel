@@ -4,15 +4,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 # from django.urls import reverse
 from django.shortcuts import render, redirect, reverse
+from .models import Room
+
+
+@login_required(login_url='/log_in/')
+def index(request):
+    rooms = Room.objects.order_by("title")
+    return render(request, "talk/index.html", {"rooms": rooms,})
+
 
 User = get_user_model()
 
-@login_required(login_url='/log_in/')
-def user_list(request):
-    users = User.objects.select_related('logged_in_user')
-    for user in users:
-        user.status = 'Online' if hasattr(user, 'logged_in_user') else 'Offline'
-    return render(request, 'talk/user_list.html', {'users':users})
+# @login_required(login_url='/log_in/')
+# def user_list(request):
+#     users = User.objects.select_related('logged_in_user')
+#     for user in users:
+#         user.status = 'Online' if hasattr(user, 'logged_in_user') else 'Offline'
+#     return render(request, 'talk/user_list.html', {'users':users})
 
 def log_in(request):
     form = AuthenticationForm()
@@ -20,7 +28,7 @@ def log_in(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect(reverse('user_list'))
+            return redirect(reverse('homepage'))
         else:
             print(form.errors)
     return render(request, 'talk/login.html', {'form': form})

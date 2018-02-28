@@ -1,7 +1,7 @@
 {% extends 'talk/base.html' %}
-<head>
-  <title>Login</title>
-</head>
+{% block title %}Login{% endblock %}
+{% block header_text %}Login{% endblock %}
+
 
 {% block content %}
   <form action="{% url 'log_in' %}" method="post">

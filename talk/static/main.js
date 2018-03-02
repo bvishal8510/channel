@@ -3,6 +3,7 @@ $(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
     console.log("Connecting to " + ws_path);
+    console.log(11);
     var socket = new ReconnectingWebSocket(ws_path);
 
     // Helpful debugging
@@ -17,6 +18,8 @@ $(function () {
         // Decode the JSON
         console.log("Got websocket message " + message.data);
         var data = JSON.parse(message.data);
+        console.log(data)
+        console.log(12);
         // Handle errors
         if (data.error) {
             alert(data.error);
@@ -33,6 +36,7 @@ $(function () {
                 "</div>"
             );
             $("#chats").append(roomdiv);
+            console.log(13);
             roomdiv.find("button").on("click", function () {
                 socket.send(JSON.stringify({
                     "command": "send",
@@ -90,6 +94,7 @@ $(function () {
     // Says if we joined a room or not by if there's a div for it
     function inRoom(roomId) {
         return $("#room-" + roomId).length > 0;
+        console.log(14);
     };
 
     // Room join/leave
@@ -97,6 +102,7 @@ $(function () {
         roomId = $(this).attr("data-room-id");
         if (inRoom(roomId)) {
             // Leave room
+            console.log(15);            
             $(this).removeClass("joined");
             socket.send(JSON.stringify({
                 "command": "leave",  // determines which handler will be used (see chat/routing.py)
@@ -104,6 +110,7 @@ $(function () {
             }));
         } else {
             // Join room
+            console.log(16);
             $(this).addClass("joined");
             socket.send(JSON.stringify({
                 "command": "join",

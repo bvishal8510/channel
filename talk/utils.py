@@ -6,15 +6,16 @@ from .models import Room
 
 def catch_client_error(func):
     @wraps(func)
-    def inner(message, args, **kwargs):
+    def inner(message, *args, **kwargs):
         try:
-            return func(message, args, **kwargs)
+            return func(message, *args, **kwargs)
         except ClientError as e:
             e.send_to(message.reply_channel)
     return inner
 
 
 def get_room_or_error(room_id, user):
+    
     if not user.is_authenticated:
         raise ClientError("USER_HAS_TO_LOGIN")
     try:

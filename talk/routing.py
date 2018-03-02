@@ -1,6 +1,7 @@
 from channels import route
 from .consumers import ws_connect, ws_receive, ws_disconnect, chat_join, chat_leave, chat_send
 
+
 websocket_routing = [
 
     route("websocket.connect", ws_connect),

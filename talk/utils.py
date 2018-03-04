@@ -15,7 +15,6 @@ def catch_client_error(func):
 
 
 def get_room_or_error(room_id, user):
-    
     if not user.is_authenticated:
         raise ClientError("USER_HAS_TO_LOGIN")
     try:

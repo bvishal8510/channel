@@ -3,7 +3,6 @@ $(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
     console.log("Connecting to " + ws_path);
-    console.log(11);
     var socket = new ReconnectingWebSocket(ws_path);
 
     // Helpful debugging
@@ -15,10 +14,8 @@ $(function () {
     };
 
     socket.onmessage = function (message) {
-        // Decode the JSON
         console.log("Got websocket message " + message.data);
         var data = JSON.parse(message.data);
-        console.log(data)
         console.log(12);
         // Handle errors
         if (data.error) {
@@ -28,14 +25,26 @@ $(function () {
         // Handle joining
         if (data.join) {
             console.log("Joining room " + data.join);
+            console.log(data.d)
+            for (x in data.d) {
+                console.log(x);
+                console.log(data.d[x])
+    }
             var roomdiv = $(
                 "<div class='room' id='room-" + data.join + "'>" +
                 "<h2>" + data.title + "</h2>" +
+                "<p class='com'>"+"</p>" +
                 "<div class='messages'></div>" +
                 "<input><button>Send</button>" +
                 "</div>"
             );
             $("#chats").append(roomdiv);
+            roomdiv.find("p").on("load", function () {
+                for (x in data.d) {
+                    $('com').append(x);
+                    // $('#show_user' + imgid).append("&nbsp;&nbsp;&nbsp;&nbsp;");
+        }});
+
             console.log(13);
             roomdiv.find("button").on("click", function () {
                 socket.send(JSON.stringify({

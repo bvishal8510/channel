@@ -36,14 +36,22 @@ def ws_receive(message):
 @channel_session_user
 def chat_join(message):
     print(7)
-    d = {}
+    l1=[]
+    l2=[]
     room = get_room_or_error(message["room"], message.user)
     if NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS:
         room.send_message(None, message.user, MSG_TYPE_ENTER)
     log = Comments.objects.filter(room=message["room"])
     for l in log:
-        d[l.comment]=str(l.user)
-    log1 = serializers.serialize('json', log)
+        l1.append(l.comment)
+        l1.append(str(l.user))
+        l2.extend([l1])
+        l1=[]
+    print(l2)
+    # log1 = serializers.serialize('json', log)
+    # print("----",log1)
+    # for i in log1:
+    #     print(i)
     # print("=========",log1)
     room.websocket_group.add(message.reply_channel)
     message.channel_session['rooms'] = list(set(message.channel_session['rooms']).union([room.id]))
@@ -51,7 +59,7 @@ def chat_join(message):
         "text": json.dumps({
             "join": str(room.id),
             "title": room.title,
-            "d":d,
+            "d":l2,
         }),
     })
 

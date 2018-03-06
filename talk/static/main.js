@@ -28,22 +28,23 @@ $(function () {
             console.log(data.d)
             for (x in data.d) {
                 console.log(x);
-                console.log(data.d[x])
     }
             var roomdiv = $(
                 "<div class='room' id='room-" + data.join + "'>" +
                 "<h2>" + data.title + "</h2>" +
-                "<p class='com'>"+"</p>" +
                 "<div class='messages'></div>" +
                 "<input><button>Send</button>" +
                 "</div>"
             );
             $("#chats").append(roomdiv);
-            roomdiv.find("p").on("load", function () {
-                for (x in data.d) {
-                    $('com').append(x);
-                    // $('#show_user' + imgid).append("&nbsp;&nbsp;&nbsp;&nbsp;");
-        }});
+            for (x in data.d) {
+                console.log(data.d[x][1]);
+                $('.messages').append(data.d[x][1]);
+                // $('.messages').append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                $('.messages').append("&emsp;&emsp;&emsp;&emsp;");
+                $('.messages').append(data.d[x][0]);
+                $('.messages').append("<br>");
+    }
 
             console.log(13);
             roomdiv.find("button").on("click", function () {

@@ -88,7 +88,6 @@ def chat_send(message):
     if int(message['room']) not in message.channel_session['rooms']:
         raise ClientError("ROOM_ACCESS_DENIED")
     room = get_room_or_error(message["room"], message.user)
-    # print(message.user,"---",message["room"],"--------",message["message"])
     Comments.objects.create(room = message["room"],user=message.user, comment=message["message"])
     room.send_message(message["message"], message.user)
 

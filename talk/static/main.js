@@ -25,25 +25,21 @@ $(function () {
         // Handle joining
         if (data.join) {
             console.log("Joining room " + data.join);
-            console.log(data.d)
-            for (x in data.d) {
-                console.log(x);
-    }
             var roomdiv = $(
-                "<div class='room' id='room-" + data.join + "'>" +
-                "<h2>" + data.title + "</h2>" +
-                "<div class='messages'></div>" +
+                "<div class='room' id='room-" + data.join + "' style='border: 2px solid green;'>"+
+                "<center><h2 style='background-color:blue; font-size: xx-large; color:white;'><i>"
+                 + data.title + "</i></h2></center>"+"<br>"+
+                "<div class='messages" + data.join + "'></div>" +
+                "<div class='messages' style='background-color:white;'></div>" +
                 "<input><button>Send</button>" +
                 "</div>"
             );
             $("#chats").append(roomdiv);
             for (x in data.d) {
-                console.log(data.d[x][1]);
-                $('.messages').append(data.d[x][1]);
-                // $('.messages').append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                $('.messages').append("&emsp;&emsp;&emsp;&emsp;");
-                $('.messages').append(data.d[x][0]);
-                $('.messages').append("<br>");
+                $('.messages'+data.join).append("<p style='color:brown;display:inline;'>"+data.d[x][1]+"</p>");
+                $('.messages'+data.join).append("&emsp;&emsp;&emsp;");
+                $('.messages'+data.join).append("<p style='display:inline;'><i>"+data.d[x][0]+"</i></p>");
+                $('.messages'+data.join).append("<br>");
     }
 
             console.log(13);
@@ -67,7 +63,7 @@ $(function () {
                     // Message
                     ok_msg = "<div class='message'>" +
                         "<span class='username'>" + data.username + "</span>" +
-                        "<span class='body'>" + data.message + "</span>" +
+                        "<span class='body'>" + data.message + "</span>" +"<br>"+
                         "</div>";
                     break;
                 case 1:

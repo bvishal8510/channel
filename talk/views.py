@@ -5,6 +5,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 # from django.urls import reverse
 from django.shortcuts import render, redirect, reverse
 from .models import Room
+from django.views import View
+import json
+from django.http import HttpResponse
 
 
 @login_required(login_url='/log_in/')
@@ -12,6 +15,17 @@ def index(request):
     rooms = Room.objects.order_by("title")
     return render(request, "talk/index.html", {"rooms": rooms,})
 
+class create_room(View):
+    def get(self,request):
+        d = dict()
+        name = request.GET['name']
+        d['name']=name
+        comm = Room.objects.create(title=name)
+        room = Room.objects.get(title=name)
+        print("Room Id",room.pk)
+        d['id']=room.pk
+        x = json.dumps(d)
+        return HttpResponse(x)
 
 User = get_user_model()
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'fuqix7-=&urq@a@jv7*np10vgw76hl!y8!5mv72g&n2&$oh93_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

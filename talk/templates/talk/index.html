@@ -4,9 +4,12 @@
 {% block header_text %}MultiChat Example{% endblock %}
 {% block content %}
 
+<input class="create_room" type="text" style="float:right;" placeholder="enter name of room">
+
     <ul class="rooms">
         {% for room in rooms %}
             <li class="room-link" data-room-id="{{ room.id }}">{{ room.title }}</li>
+            <!-- <li id="room + {{room.id}}"></li> -->
         {% empty %}
             <p class="empty">No chat rooms defined. Maybe make some in the <a href="{% url 'admin:index' %}">admin</a>?</p>
         {% endfor %}

@@ -1,3 +1,29 @@
+$(document).ready(function(){
+    $(".create_room").on('keypress', function(event) {
+        console.log(1);
+        key = event.keyCode;
+        console.log(5);
+        if (key == 13) {
+            var name;
+            console.log(2);
+            name = $(this).val();
+            console.log(name);
+            $(this).val('');
+            if (name != ''){
+            $.get('/create_room/', {'name':name}, function (data) {
+                console.log(3);
+                var data1 =  JSON.parse(data);
+                console.log(data1);
+                for (x in data1) {
+                    $('.room-link').append(data1[x]);
+                    $('.room-link').append("<br>");
+                    }
+                })
+            }
+        }
+    })
+});
+
 $(function () {
     // Correctly decide between ws:// and wss://
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";

@@ -1,18 +1,17 @@
 {% extends 'talk/base.html' %}
-<head>
-  <title>Sign up</title>
-</head>
+
+{% block title %}Sign up{% endblock %}
 
 {% block content %}
-  <form action="{% url 'sign_up' %}" method="post">
+  <form class="form-group" action="{% url 'sign_up' %}" method="post">
     {% csrf_token %}
     {% for field in form %}
-      <div>
+      <div class="form-group">
         {{ field.label_tag }}
         {{ field }}
       </div>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <button type="submit" class="btn btn-primary">Sign up</button>
     <p>Already have an account? <a href="{% url 'log_in' %}">Log in!</a></p>
   </form>
 {% endblock content %}

@@ -4,20 +4,18 @@
 {% block header_text %}MultiChat Example{% endblock %}
 {% block content %}
 
-<input class="create_room" type="text" style="float:right;" placeholder="enter name of room">
+<!-- <input class="create_room form-input input-group" type="text" style="float:right;" placeholder="enter name of room"> -->
 
-    <ul class="rooms">
+    <ul class="rooms list-group">
         {% for room in rooms %}
-            <li class="room-link" data-room-id="{{ room.id }}">{{ room.title }}</li>
-            <!-- <li id="room + {{room.id}}"></li> -->
+            <li class="room-link list-group-item" data-room-id="{{ room.id }}">{{ room.title }}</li>
         {% empty %}
             <p class="empty">No chat rooms defined. Maybe make some in the <a href="{% url 'admin:index' %}">admin</a>?</p>
         {% endfor %}
     </ul>
-
+    <div id="room_user" data-room-id=""></div><br>
     <div id="chats" style="width:90vh; height:5vh;">
     </div>
-
 {% endblock %}
 
 {% block extra_body %}

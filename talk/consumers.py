@@ -10,6 +10,7 @@ from django.core import serializers
 @channel_session_user_from_http
 def ws_connect(message):
     print(4)
+    print(dict(message))
     message.reply_channel.send({"accept": True})
     message.channel_session['rooms'] = []
     # print(dict(message))

@@ -1,23 +1,25 @@
 $(document).ready(function(){
     $(".create_room").on('keypress', function(event) {
-        console.log(1);
         key = event.keyCode;
-        console.log(5);
         if (key == 13) {
             var name;
-            console.log(2);
             name = $(this).val();
             console.log(name);
             $(this).val('');
             if (name != ''){
             $.get('/create_room/', {'name':name}, function (data) {
-                console.log(3);
                 var data1 =  JSON.parse(data);
+                $('#room_user').attr({ "data-room-id" : data1[id] });
                 console.log(data1);
-                for (x in data1) {
-                    $('.room-link').append(data1[x]);
-                    $('.room-link').append("<br>");
-                    }
+                console.log(data1['name']);
+                $('#room_user').append("<br><br>");
+                $('#room_user').append(data1['name']);
+                $('#room_user').append("<br>");
+                console.log(data1['id']);
+                // for (x in data1) {
+                //     $('.room'+ data1['id']).append(data1['name']);
+                //     $('.room'+ data1['id']).append("<br>");
+                //     }
                 })
             }
         }
@@ -53,11 +55,11 @@ $(function () {
             console.log("Joining room " + data.join);
             var roomdiv = $(
                 "<div class='room' id='room-" + data.join + "' style='border: 2px solid green;'>"+
-                "<center><h2 style='background-color:blue; font-size: xx-large; color:white;'><i>"
+                "<center><h2 style='background-color:light-blue; font-size: xx-large; color:white;'><i>"
                  + data.title + "</i></h2></center>"+"<br>"+
                 "<div class='messages" + data.join + "'></div>" +
                 "<div class='messages' style='background-color:white;'></div>" +
-                "<input><button>Send</button>" +
+                "<input><button class='btn btn-success' >Send</button>" +
                 "</div>"
             );
             $("#chats").append(roomdiv);
@@ -131,6 +133,27 @@ $(function () {
 
     // Room join/leave
     $("li.room-link").click(function () {
+        roomId = $(this).attr("data-room-id");
+        if (inRoom(roomId)) {
+            // Leave room
+            console.log(15);            
+            $(this).removeClass("joined");
+            socket.send(JSON.stringify({
+                "command": "leave",  // determines which handler will be used (see chat/routing.py)
+                "room": roomId
+            }));
+        } else {
+            // Join room
+            console.log(16);
+            $(this).addClass("joined");
+            socket.send(JSON.stringify({
+                "command": "join",
+                "room": roomId
+            }));
+        }
+    });
+
+    $("#room_user").click(function () {
         roomId = $(this).attr("data-room-id");
         if (inRoom(roomId)) {
             // Leave room
